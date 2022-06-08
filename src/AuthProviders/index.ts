@@ -1,3 +1,4 @@
+export { PemProvider } from "./PemProvider";
 export { LedgerProvider } from "./LedgerProvider";
 export { ExtensionProvider } from "./ExtensionProvider";
 export { MaiarProvider } from "./MaiarProvider";
