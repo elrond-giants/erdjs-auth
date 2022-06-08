@@ -16,8 +16,12 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@elrondnetwork/erdjs-extension-provider": "^2.0.1",
+    "@elrondnetwork/erdjs-hw-provider": "^2.0.1",
     "@elrondnetwork/erdjs-wallet-connect-provider": "^2.0.1",
     "@elrondnetwork/erdjs-web-wallet-provider": "^2.1.0",
     "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.3"
   }
 }

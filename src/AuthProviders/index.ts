@@ -1,2 +1,4 @@
-export {default as MaiarProvider} from "./MaiarProvider";
-export {default as WebProvider} from "./WebProvider";
+export { LedgerProvider } from "./LedgerProvider";
+export { ExtensionProvider } from "./ExtensionProvider";
+export { MaiarProvider } from "./MaiarProvider";
+export { WebProvider } from "./WebProvider";

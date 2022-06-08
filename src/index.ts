@@ -1,6 +1,2 @@
-export {MaiarProviderFactory, WebProviderFactory} from "./Factories";
-export {MaiarProvider, WebProvider} from "./AuthProviders";
-
-
-
-
+export { MaiarProviderFactory, WebProviderFactory, ExtensionProviderFactory, LedgerProviderFactory } from "./Factories";
+export { MaiarProvider, WebProvider, ExtensionProvider, LedgerProvider } from "./AuthProviders";

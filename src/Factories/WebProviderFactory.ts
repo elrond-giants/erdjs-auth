@@ -1,32 +1,32 @@
-import {IAuthProvider, IAuthProviderFactory, IWebConnectionOptions} from "../types";
-import {WalletProvider} from "@elrondnetwork/erdjs-web-wallet-provider/out";
-import WebProvider from "../AuthProviders/WebProvider";
+import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider/out';
 
-export default class WebProviderFactory implements IAuthProviderFactory {
-    private readonly networkAddress: string;
-    private connectionOptions: IWebConnectionOptions = {};
-    private address: string | null = null;
+import { WebProvider } from '../AuthProviders/WebProvider';
+import { IAuthProvider, IAuthProviderFactory, IWebConnectionOptions } from '../types';
 
-    constructor(networkAddress: string) {
-        this.networkAddress = networkAddress;
-    }
+export class WebProviderFactory implements IAuthProviderFactory {
+  private readonly networkAddress: string;
+  private connectionOptions: IWebConnectionOptions = {};
+  private address: string | null = null;
 
-    setConnectionOptions(value: IWebConnectionOptions) {
-        this.connectionOptions = value;
+  constructor(networkAddress: string) {
+    this.networkAddress = networkAddress;
+  }
 
-        return this;
-    }
+  setConnectionOptions(value: IWebConnectionOptions) {
+    this.connectionOptions = value;
 
-    setAddress(value: string | null) {
-        this.address = value;
+    return this;
+  }
 
-        return this;
-    }
+  setAddress(value: string | null) {
+    this.address = value;
 
-    createProvider(): IAuthProvider {
-        const provider = new WalletProvider(this.networkAddress);
+    return this;
+  }
 
-        return new WebProvider(provider, this.connectionOptions, this.address);
-    }
+  createProvider(): IAuthProvider {
+    const provider = new WalletProvider(this.networkAddress);
 
-};
+    return new WebProvider(provider, this.connectionOptions, this.address);
+  }
+}

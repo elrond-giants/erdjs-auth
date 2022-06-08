@@ -1,72 +1,65 @@
-import {
-    AuthProviderType,
-    IAuthProvider,
-    IAuthState,
-    Transaction
-} from "../types";
-import {
-    ExtensionProvider as ErdExtensionProvider
-} from "@elrondnetwork/erdjs-extension-provider/out";
-import {ITransaction} from "@elrondnetwork/erdjs-extension-provider/out/interface";
+import { ExtensionProvider as ErdExtensionProvider } from '@elrondnetwork/erdjs-extension-provider/out';
+import { ITransaction } from '@elrondnetwork/erdjs-extension-provider/out/interface';
 
-export default class ExtensionProvider implements IAuthProvider {
-    private provider: ErdExtensionProvider;
-    private authenticated: boolean = false;
+import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../types';
 
-    constructor(provider: ErdExtensionProvider) {
-        this.provider = provider;
+export class ExtensionProvider implements IAuthProvider {
+  private provider: ErdExtensionProvider;
+  private authenticated: boolean = false;
+
+  constructor(provider: ErdExtensionProvider) {
+    this.provider = provider;
+  }
+
+  getAddress(): string | null {
+    return this.provider.account.address.length ? this.provider.account.address : null;
+  }
+
+  async init(): Promise<boolean> {
+    if (this.provider.isInitialized()) {
+      return true;
     }
 
-    getAddress(): string | null {
-        return this.provider.account.address.length ? this.provider.account.address : null;
+    return this.provider.init();
+  }
+
+  async login(token?: string): Promise<string> {
+    await this.provider.login({ token });
+    this.authenticated = true;
+
+    return this.provider.account.address;
+  }
+
+  async logout(): Promise<boolean> {
+    const result = await this.provider.logout();
+    if (result) {
+      this.authenticated = false;
     }
 
-    async init(): Promise<boolean> {
-        if (this.provider.isInitialized()) {
-            return true;
-        }
+    return result;
+  }
 
-        return this.provider.init();
+  signTransaction(tx: Transaction): Promise<Transaction | null> {
+    return this.provider.signTransaction(tx as ITransaction);
+  }
+
+  getSignature() {
+    if (this.provider.account.signature !== undefined) {
+      return this.provider.account.signature;
     }
 
-    async login(token?: string): Promise<string> {
-        await this.provider.login({token});
-        this.authenticated = true;
+    return null;
+  }
 
-        return this.provider.account.address;
-    }
+  getType(): AuthProviderType {
+    return AuthProviderType.EXTENSION;
+  }
 
-    async logout(): Promise<boolean> {
-        const result = await this.provider.logout();
-        if (result) {
-            this.authenticated = false;
-        }
-
-        return result;
-    }
-
-    signTransaction(tx: Transaction): Promise<Transaction | null> {
-        return this.provider.signTransaction(tx as ITransaction)
-    }
-
-    getSignature() {
-        if (this.provider.account.signature !== undefined) {
-            return this.provider.account.signature;
-        }
-
-        return null;
-    }
-
-    getType(): AuthProviderType {
-        return AuthProviderType.EXTENSION;
-    }
-
-    toJson(): IAuthState {
-        return {
-            address: this.getAddress(),
-            authProviderType: this.getType(),
-            authenticated: this.authenticated
-        };
-    }
-
-};
+  toJson(): IAuthState {
+    return {
+      address: this.getAddress(),
+      authProviderType: this.getType(),
+      authenticated: this.authenticated,
+    };
+  }
+}
