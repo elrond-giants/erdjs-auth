@@ -1,6 +1,6 @@
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider/out';
 
-import { WebProvider } from '../AuthProviders/WebProvider';
+import { WebProvider } from '../AuthProviders';
 import { IAuthProvider, IAuthProviderFactory, IWebConnectionOptions } from '../types';
 
 export class WebProviderFactory implements IAuthProviderFactory {

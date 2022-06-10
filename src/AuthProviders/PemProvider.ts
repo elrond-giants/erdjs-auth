@@ -6,6 +6,8 @@ import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../typ
 export class PemProvider implements IAuthProvider {
   private userSigner: UserSigner;
   private authenticated: boolean = false;
+  onChange: (() => void) | undefined;
+
 
   constructor(walletPemKey: string) {
     this.userSigner = UserSigner.fromPem(walletPemKey);
@@ -20,11 +22,15 @@ export class PemProvider implements IAuthProvider {
   }
 
   async login(): Promise<string> {
+    if (this.onChange) {this.onChange();}
+
     return Promise.resolve(this.getAddress());
   }
 
   async logout(): Promise<boolean> {
     this.authenticated = false;
+    if (this.onChange) {this.onChange();}
+
     return Promise.resolve(true);
   }
 

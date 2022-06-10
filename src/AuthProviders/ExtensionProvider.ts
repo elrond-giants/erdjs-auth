@@ -6,6 +6,7 @@ import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../typ
 export class ExtensionProvider implements IAuthProvider {
   private provider: ErdExtensionProvider;
   private authenticated: boolean = false;
+  onChange: (() => void) | undefined;
 
   constructor(provider: ErdExtensionProvider) {
     this.provider = provider;
@@ -24,8 +25,10 @@ export class ExtensionProvider implements IAuthProvider {
   }
 
   async login(token?: string): Promise<string> {
-    await this.provider.login({ token });
+    await this.provider.login({token});
     this.authenticated = true;
+
+    if (this.onChange) {this.onChange();}
 
     return this.provider.account.address;
   }
@@ -35,6 +38,8 @@ export class ExtensionProvider implements IAuthProvider {
     if (result) {
       this.authenticated = false;
     }
+
+    if (this.onChange) {this.onChange();}
 
     return result;
   }

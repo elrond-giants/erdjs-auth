@@ -27,6 +27,8 @@ export interface IAuthState {
 }
 
 export interface IAuthProvider {
+  onChange: (() => void) | undefined;
+
   init(): Promise<boolean>;
 
   login(token?: string): Promise<string>;

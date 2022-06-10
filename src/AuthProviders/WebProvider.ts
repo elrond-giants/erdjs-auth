@@ -7,6 +7,8 @@ export class WebProvider implements IAuthProvider {
   private provider: WalletProvider;
   private connectionOptions: IWebConnectionOptions;
   private address: string | null;
+  onChange: (() => void) | undefined;
+
 
   constructor(provider: WalletProvider, options: IWebConnectionOptions, address: string | null = null) {
     this.provider = provider;

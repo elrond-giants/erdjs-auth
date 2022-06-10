@@ -1,28 +1,31 @@
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider/out';
 
-import { MaiarProvider } from '../AuthProviders/MaiarProvider';
+import { MaiarProvider } from '../AuthProviders';
 import { IAuthProvider, IAuthProviderFactory } from '../types';
-
-interface IConnectionHandler {
-  onLogin?: () => void;
-  onLogout?: () => void;
-}
 
 export class MaiarProviderFactory implements IAuthProviderFactory {
   private readonly _bridgeUrl: string;
-  private _connectionHandler: IConnectionHandler;
 
-  constructor(bridgeUrl: string, connectionHandler: IConnectionHandler) {
+  constructor(bridgeUrl: string) {
     this._bridgeUrl = bridgeUrl;
-    this._connectionHandler = connectionHandler;
   }
 
   createProvider(): IAuthProvider {
+    let maiarProvider: MaiarProvider;
+    const onChange = () => {
+      if (maiarProvider.onChange) {
+        maiarProvider.onChange();
+      }
+    }
+
     const provider = new WalletConnectProvider(this._bridgeUrl, {
-      onClientLogin: this._connectionHandler.onLogin ?? (() => {}),
-      onClientLogout: this._connectionHandler.onLogout ?? (() => {}),
+      onClientLogin: onChange,
+      onClientLogout: onChange
     });
 
-    return new MaiarProvider(provider);
+
+    maiarProvider = new MaiarProvider(provider);
+
+    return maiarProvider;
   }
 }

@@ -9,6 +9,8 @@ export class LedgerProvider implements IAuthProvider {
   private address: string | null;
   private signature: string | null;
   private addressIndex: number;
+  onChange: (() => void) | undefined;
+
 
   constructor(provider: HWProvider, addressIndex: number) {
     this.address = null;
@@ -43,6 +45,8 @@ export class LedgerProvider implements IAuthProvider {
     }
 
     this.authenticated = true;
+    if (this.onChange) {this.onChange();}
+
     return this.address;
   }
 
@@ -51,6 +55,8 @@ export class LedgerProvider implements IAuthProvider {
     if (result) {
       this.authenticated = false;
     }
+
+    if (this.onChange) {this.onChange();}
 
     return result;
   }

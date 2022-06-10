@@ -5,6 +5,7 @@ import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../typ
 
 export class MaiarProvider implements IAuthProvider {
   private provider: WalletConnectProvider;
+  onChange: (() => void) | undefined;
 
   constructor(provider: WalletConnectProvider) {
     this.provider = provider;
