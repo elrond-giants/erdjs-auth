@@ -7,6 +7,8 @@ export class WebProvider implements IAuthProvider {
   private provider: WalletProvider;
   private connectionOptions: IWebConnectionOptions;
   private address: string | null;
+  private authenticated: boolean;
+  private signature: string | null;
   onChange: (() => void) | undefined;
 
 
@@ -14,9 +16,17 @@ export class WebProvider implements IAuthProvider {
     this.provider = provider;
     this.connectionOptions = options;
     this.address = address;
+    this.authenticated = false;
+    this.signature = null;
   }
 
   init(): Promise<boolean> {
+    if (window !== undefined) {
+      const params = new URLSearchParams(window.location.search);
+      this.address = params.get("address");
+      this.signature = params.get("signature");
+      this.authenticated = !!this.address;
+    }
     return Promise.resolve(true);
   }
 
@@ -45,8 +55,8 @@ export class WebProvider implements IAuthProvider {
     return this.address;
   }
 
-  getSignature(): null {
-    return null;
+  getSignature(): string | null {
+    return this.signature;
   }
 
   getType(): AuthProviderType {
@@ -57,7 +67,7 @@ export class WebProvider implements IAuthProvider {
     return {
       address: this.address,
       authProviderType: AuthProviderType.WEBWALLET,
-      authenticated: false, // todo: handle authenticated state
+      authenticated: this.authenticated
     };
   }
 }
