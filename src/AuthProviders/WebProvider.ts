@@ -23,9 +23,14 @@ export class WebProvider implements IAuthProvider {
   init(): Promise<boolean> {
     if (window !== undefined) {
       const params = new URLSearchParams(window.location.search);
-      this.address = params.get("address");
-      this.signature = params.get("signature");
-      this.authenticated = !!this.address;
+      const address = params.get("address");
+      if (null !== address) {
+        this.setState({
+          address,
+          signature: params.get("signature"),
+          authenticated: true
+        });
+      }
     }
     return Promise.resolve(true);
   }
@@ -61,6 +66,18 @@ export class WebProvider implements IAuthProvider {
 
   getType(): AuthProviderType {
     return AuthProviderType.WEBWALLET;
+  }
+
+  setState({address, signature, authenticated}: {
+    address: string | null,
+    signature?: string | null,
+    authenticated?: boolean
+  }) {
+    this.address = address;
+    this.signature = signature ?? null;
+    this.authenticated = authenticated ?? false;
+
+    return this;
   }
 
   toJson(): IAuthState {
