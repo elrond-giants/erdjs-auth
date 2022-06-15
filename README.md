@@ -35,4 +35,4 @@ const authSignature = provider.getSignature();
 ```
 
 If you are using a react-based framework we recommend using the `@elrond-giants/erd-react-hooks` package as it makes the
-authentication package even easier.
+authentication process even easier.
