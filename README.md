@@ -3,7 +3,7 @@
 ### Overview
 
 This library aims to make it easy to authenticate and sign transactions on Elrond network. It offers a common interface
-for all providers.
+for all auth providers.
 
 ### Install
 
@@ -27,12 +27,12 @@ await provider.init();
 // you can pass a token to be included in auth signature
 const token = "some-token";
 await provider.login(token);
+````
 
-
-......
+```typescript
 const address = provider.getAddress();
 const authSignature = provider.getSignature();
-
 ```
 
-If you are using a react-based framework we recommend using the `@elrond-giants/erd-react-hooks` package as it makes the authentication package even more easy.
+If you are using a react-based framework we recommend using the `@elrond-giants/erd-react-hooks` package as it makes the
+authentication package even easier.
