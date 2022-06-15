@@ -8,14 +8,13 @@ export class LedgerProvider implements IAuthProvider {
   private authenticated: boolean = false;
   private address: string | null;
   private signature: string | null;
-  private addressIndex: number;
+  private addressIndex: number | null;
   onChange: (() => void) | undefined;
 
-
-  constructor(provider: HWProvider, addressIndex: number) {
+  constructor(provider: HWProvider) {
     this.address = null;
     this.signature = null;
-    this.addressIndex = addressIndex;
+    this.addressIndex = null;
     this.provider = provider;
   }
 
@@ -27,11 +26,26 @@ export class LedgerProvider implements IAuthProvider {
     if (this.provider.isInitialized()) {
       return true;
     }
-
     return this.provider.init();
   }
 
+  getAccounts(page?: number | undefined, pageSize?: number | undefined): Promise<string[]> {
+    if (!this?.provider?.isInitialized()) {
+      throw new Error("Ledger provider is not initialized.");
+    }
+    return this.provider.getAccounts(page, pageSize);
+  }
+
+  setAccount(accountIndex: number) {
+    this.addressIndex = accountIndex;
+    return this;
+  }
+
   async login(_token?: string): Promise<string> {
+    if (!this.addressIndex) {
+      throw new Error("Account is not selectd for Ledger Provider.");
+    }
+
     if (_token) {
       const token = Buffer.from(_token, "utf-8");
       const { address, signature } = await this.provider.tokenLogin({
@@ -45,7 +59,9 @@ export class LedgerProvider implements IAuthProvider {
     }
 
     this.authenticated = true;
-    if (this.onChange) {this.onChange();}
+    if (this.onChange) {
+      this.onChange();
+    }
 
     return this.address;
   }
@@ -56,7 +72,9 @@ export class LedgerProvider implements IAuthProvider {
       this.authenticated = false;
     }
 
-    if (this.onChange) {this.onChange();}
+    if (this.onChange) {
+      this.onChange();
+    }
 
     return result;
   }
