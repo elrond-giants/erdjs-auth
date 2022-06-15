@@ -1,7 +1,7 @@
 {
   "name": "@elrond-giants/erdjs-auth",
   "version": "0.3.0",
-  "description": "",
+  "description": "Easy to use Elrond typescript Auth Providers, with a common interface.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
   "scripts": {
