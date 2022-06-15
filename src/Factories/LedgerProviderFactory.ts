@@ -4,11 +4,7 @@ import { LedgerProvider } from '../AuthProviders';
 import { IAuthProvider, IAuthProviderFactory } from '../types';
 
 export class LedgerProviderFactory implements IAuthProviderFactory {
-  private readonly addressIndex: number;
-  constructor(addressIndex: number) {
-    this.addressIndex = addressIndex;
-  }
   createProvider(): IAuthProvider {
-    return new LedgerProvider(new HWProvider(), this.addressIndex);
+    return new LedgerProvider(new HWProvider());
   }
 }
