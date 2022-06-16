@@ -55,3 +55,10 @@ export interface IWebConnectionOptions {
   logoutRedirectUrl?: string;
   transactionRedirectUrl?: string;
 }
+
+export interface INetworkConfig {
+  walletAddress: string;
+  bridgeAddress: string;
+}
+
+export type NetworkEnv = "testnet" | "devnet" | "mainnet";

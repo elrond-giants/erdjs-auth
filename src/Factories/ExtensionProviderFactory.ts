@@ -1,5 +1,4 @@
 import { ExtensionProvider as ErdExtProvider } from '@elrondnetwork/erdjs-extension-provider/out';
-
 import { ExtensionProvider } from '../AuthProviders';
 import { IAuthProvider, IAuthProviderFactory } from '../types';
 

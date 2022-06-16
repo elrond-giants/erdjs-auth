@@ -1,15 +1,16 @@
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider/out';
-
 import { WebProvider } from '../AuthProviders';
-import { IAuthProvider, IAuthProviderFactory, IWebConnectionOptions } from '../types';
+import {IAuthProvider, IAuthProviderFactory, IWebConnectionOptions, NetworkEnv} from '../types';
+import {network} from "../network";
 
 export class WebProviderFactory implements IAuthProviderFactory {
   private readonly networkAddress: string;
   private connectionOptions: IWebConnectionOptions = {};
   private address: string | null = null;
 
-  constructor(networkAddress: string) {
-    this.networkAddress = networkAddress;
+  constructor(env: NetworkEnv) {
+    const networkOptions = network[env];
+    this.networkAddress = networkOptions.walletAddress;
   }
 
   setConnectionOptions(value: IWebConnectionOptions) {

@@ -1,13 +1,14 @@
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider/out';
-
 import { MaiarProvider } from '../AuthProviders';
-import { IAuthProvider, IAuthProviderFactory } from '../types';
+import {IAuthProvider, IAuthProviderFactory, NetworkEnv} from '../types';
+import {network} from "../network";
 
 export class MaiarProviderFactory implements IAuthProviderFactory {
   private readonly _bridgeUrl: string;
 
-  constructor(bridgeUrl: string) {
-    this._bridgeUrl = bridgeUrl;
+  constructor(env: NetworkEnv) {
+    const networkOptions = network[env];
+    this._bridgeUrl = networkOptions.bridgeAddress;
   }
 
   createProvider(): IAuthProvider {

@@ -1,5 +1,4 @@
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider/out';
-
 import { LedgerProvider } from '../AuthProviders';
 import { IAuthProvider, IAuthProviderFactory } from '../types';
 
