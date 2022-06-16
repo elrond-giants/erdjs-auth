@@ -17,11 +17,10 @@ The library comes with simple provider factories for all providers. You can cust
 choose not to use them at all.
 
 ```typescript
-import {WebProviderFactory} from "@elrond-giants/erdjs-auth";
+import {ExtensionProviderFactory} from "@elrond-giants/erdjs-auth";
 
 
-const networkAddress = "https://devnet-wallet.elrond.com/dapp/init";
-const provider = new WebProviderFactory(networkAddress).createProvider();
+const provider = new ExtensionProviderFactory().createProvider();
 await provider.init();
 
 // you can pass a token to be included in auth signature
@@ -32,6 +31,17 @@ await provider.login(token);
 ```typescript
 const address = provider.getAddress();
 const authSignature = provider.getSignature();
+```
+
+An `onChange` callback can be set and it will be called when login/logout is done.
+
+```typescript
+const provider = new MaiarProviderFactory("devnet").createProvider();
+provider.onChange = () => {
+    const {address, authenticated} = provider.toJson();
+    console.log(address, authenticated);
+};
+const initialized = await provider.init();
 ```
 
 If you are using a react-based framework we recommend using the `@elrond-giants/erd-react-hooks` package as it makes the

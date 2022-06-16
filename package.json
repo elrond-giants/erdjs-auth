@@ -1,6 +1,6 @@
 {
   "name": "@elrond-giants/erdjs-auth",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Easy to use Elrond typescript Auth Providers, with a common interface.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -10,7 +10,8 @@
   },
   "keywords": [
     "erdjs",
-    "elrond signing providers"
+    "elrond signing providers",
+    "Elrond"
   ],
   "author": "ElrondGiants",
   "license": "GPL-3.0-or-later",
