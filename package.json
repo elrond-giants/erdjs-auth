@@ -29,8 +29,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/Elrond-Giants/erdjs-auth.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
