@@ -25,7 +25,9 @@ export class ExtensionProvider implements IAuthProvider {
   }
 
   async login(token?: string): Promise<string> {
-    await this.provider.login({token});
+    const result = await this.provider.login({token});
+    if (!result) {return "";}
+
     this.authenticated = true;
 
     if (this.onChange) {this.onChange();}
