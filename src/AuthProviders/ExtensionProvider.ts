@@ -62,6 +62,10 @@ export class ExtensionProvider implements IAuthProvider {
     return AuthProviderType.EXTENSION;
   }
 
+  getBaseProvider(): ErdExtensionProvider {
+    return this.provider;
+  }
+
   toJson(): IAuthState {
     return {
       address: this.getAddress(),

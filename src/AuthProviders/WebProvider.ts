@@ -80,6 +80,10 @@ export class WebProvider implements IAuthProvider {
     return this;
   }
 
+  getBaseProvider(): WalletProvider {
+    return this.provider;
+  }
+
   toJson(): IAuthState {
     return {
       address: this.address,

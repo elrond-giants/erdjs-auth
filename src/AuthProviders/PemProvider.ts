@@ -47,6 +47,10 @@ export class PemProvider implements IAuthProvider {
     return AuthProviderType.PEM;
   }
 
+  getBaseProvider(): any {
+    return null;
+  }
+
   toJson(): IAuthState {
     return {
       address: this.getAddress(),

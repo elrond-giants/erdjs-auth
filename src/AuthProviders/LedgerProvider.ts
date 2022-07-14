@@ -91,6 +91,10 @@ export class LedgerProvider implements IAuthProvider {
     return AuthProviderType.LEDGER;
   }
 
+  getBaseProvider(): HWProvider {
+    return this.provider;
+  }
+
   toJson(): IAuthState {
     return {
       address: this.getAddress(),

@@ -44,6 +44,8 @@ export interface IAuthProvider {
   getAddress(): string | null;
 
   getSignature(): string | null;
+
+  getBaseProvider(): any;
 }
 
 export interface IAuthProviderFactory {

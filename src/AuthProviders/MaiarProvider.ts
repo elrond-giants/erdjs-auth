@@ -51,6 +51,10 @@ export class MaiarProvider implements IAuthProvider {
     return this.provider.signature.length ? this.provider.signature : null;
   }
 
+  getBaseProvider(): WalletConnectProvider {
+    return this.provider;
+  }
+
   toJson(): IAuthState {
     return {
       address: this.provider.address,
