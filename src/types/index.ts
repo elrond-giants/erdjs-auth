@@ -61,6 +61,8 @@ export interface IWebConnectionOptions {
 export interface INetworkConfig {
   walletAddress: string;
   bridgeAddress: string;
+  chainId: string;
+  relayAddress: string;
 }
 
 export type NetworkEnv = "testnet" | "devnet" | "mainnet";
