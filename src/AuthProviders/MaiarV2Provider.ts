@@ -1,12 +1,17 @@
-import {AuthProviderType, IAuthProvider, IAuthState, Transaction} from "../types";
+import {
+    AuthProviderType,
+    IAuthProvider,
+    IAuthState,
+    LoginOptions,
+    LogoutOptions,
+    Transaction
+} from "../types";
 import {WalletConnectProviderV2} from "maiar-v2/out";
 import {ITransaction} from "maiar-v2/out/interface";
 
 
-
 export class MaiarV2Provider implements IAuthProvider {
     private provider: WalletConnectProviderV2;
-    private pairings: [] = [];
     onChange: (() => void) | undefined;
 
     constructor(provider: WalletConnectProviderV2) {
@@ -15,20 +20,23 @@ export class MaiarV2Provider implements IAuthProvider {
 
     async init(): Promise<boolean> {
         if (!this.provider.isInitialized()) {
-            return this.provider.init();
+            await this.provider.init();
         }
 
         return true;
     }
 
-    async login(token?: string): Promise<string> {
-        console.log(this.provider.pairings);
-        const uri = await this.provider.login();
-        return uri;
+    async login(token?: string, options?: LoginOptions): Promise<string> {
+        const topic = options?.pairingTopic;
+        const {uri, approval} = await this.provider.connect({topic});
+        this.provider.login({token, approval});
+
+        return uri || "";
     }
 
-    logout(): Promise<boolean> {
-        return this.provider.logout();
+    logout(options?: LogoutOptions): Promise<boolean> {
+        const topic = options?.pairingTopic;
+        return this.provider.logout({topic});
     }
 
     signTransaction(tx: Transaction): Promise<Transaction | null> {
@@ -36,7 +44,7 @@ export class MaiarV2Provider implements IAuthProvider {
     }
 
     getType(): AuthProviderType {
-        return AuthProviderType.MAIAR;
+        return AuthProviderType.MAIARV2;
     }
 
     getAddress(): string | null {
