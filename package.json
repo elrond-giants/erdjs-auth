@@ -1,6 +1,6 @@
 {
   "name": "@elrond-giants/erdjs-auth",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Easy to use Elrond typescript Auth Providers, with a common interface.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -21,6 +21,7 @@
     "@elrondnetwork/erdjs-wallet-connect-provider": "^2.0.1",
     "@elrondnetwork/erdjs-walletcore": "^1.0.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "^2.1.0",
+    "maiar-v2": "npm:@elrondnetwork/erdjs-wallet-connect-provider@^2.1.0-beta.2",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
