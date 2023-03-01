@@ -1,16 +1,32 @@
-import { UserSigner } from '@elrondnetwork/erdjs-walletcore/out';
-import { ISignable as PemWalletTransaction } from '@elrondnetwork/erdjs-walletcore/out/interface';
+import { UserSigner } from '@multiversx/sdk-wallet';
+import { ISignable as PemWalletTransaction } from '@multiversx/sdk-wallet/out/interface';
 
-import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../types';
+import {
+  AuthProviderType, EventHandler,
+  EventType,
+  IAuthProvider,
+  IAuthState,
+  IEventBus,
+  Transaction
+} from '../types';
 
 export class PemProvider implements IAuthProvider {
   private userSigner: UserSigner;
   private authenticated: boolean = false;
-  onChange: (() => void) | undefined;
+  private eventBus: IEventBus;
 
 
-  constructor(walletPemKey: string) {
+  constructor(walletPemKey: string,  eventBus: IEventBus) {
     this.userSigner = UserSigner.fromPem(walletPemKey);
+    this.eventBus = eventBus;
+  }
+
+  off(event: EventType, handler: EventHandler): void {
+    this.eventBus.unsubscribe(event, handler);
+  }
+
+  on(event: EventType, handler: EventHandler): void {
+    this.eventBus.subscribe(event, handler);
   }
 
   getAddress(): string {
@@ -22,14 +38,14 @@ export class PemProvider implements IAuthProvider {
   }
 
   async login(): Promise<string> {
-    if (this.onChange) {this.onChange();}
+    this.eventBus.emit("login", {});
 
     return Promise.resolve(this.getAddress());
   }
 
   async logout(): Promise<boolean> {
     this.authenticated = false;
-    if (this.onChange) {this.onChange();}
+    this.eventBus.emit("logout", {});
 
     return Promise.resolve(true);
   }

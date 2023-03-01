@@ -1,19 +1,18 @@
 import {
   ITransaction as ExtensionTransaction
-} from '@elrondnetwork/erdjs-extension-provider/out/interface';
-import {ITransaction as LedgerTransaction} from '@elrondnetwork/erdjs-hw-provider/out/interface';
+} from '@multiversx/sdk-extension-provider/out/interface';
+import {ITransaction as LedgerTransaction} from '@multiversx/sdk-hw-provider/out/interface';
 import {
   ITransaction as WalletConnectTransaction
-} from '@elrondnetwork/erdjs-wallet-connect-provider/out/interface';
-import {ISignable as PemWalletTransaction} from '@elrondnetwork/erdjs-walletcore/out/interface';
+} from '@multiversx/sdk-wallet-connect-provider/out/interface';
+import {ISignable as PemWalletTransaction} from '@multiversx/sdk-wallet/out/interface';
 import {
   ITransaction as WebWalletTransaction
-} from '@elrondnetwork/erdjs-web-wallet-provider/out/interface';
-import {PairingTypes} from "maiar-v2/out";
+} from '@multiversx/sdk-web-wallet-provider/out/interface';
+
 
 export enum AuthProviderType {
-  MAIAR = "maiar",
-  MAIARV2 = "maiarv2",
+  WALLET_CONNECT = "wallet_connect",
   WEBWALLET = "webwallet",
   EXTENSION = "extension",
   LEDGER = "ledger",
@@ -41,9 +40,13 @@ export type LoginOptions = {
 export type LogoutOptions = {
   pairingTopic?: string;
 }
+export type EventHandler = (e: { name: EventType, data: any }) => void;
 
 export interface IAuthProvider {
-  onChange: (() => void) | undefined;
+
+  on(event: EventType, handler: EventHandler): void;
+
+  off(event: EventType, handler: EventHandler): void;
 
   init(): Promise<boolean>;
 
@@ -82,3 +85,14 @@ export interface INetworkConfig {
 }
 
 export type NetworkEnv = "testnet" | "devnet" | "mainnet";
+
+export type EventType = "login" | "logout" | string;
+
+export interface IEventBus {
+  subscribe(key: EventType, handler: EventHandler): void;
+
+  unsubscribe(key: EventType, handler: EventHandler): void;
+
+  emit(key: EventType, payload: any): void;
+
+}

@@ -1,7 +1,14 @@
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider/out';
-import { ITransaction as LedgerTransaction } from '@elrondnetwork/erdjs-hw-provider/out/interface';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
+import { ITransaction as LedgerTransaction } from '@multiversx/sdk-hw-provider/out/interface';
 
-import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../types';
+import {
+  AuthProviderType, EventHandler,
+  EventType,
+  IAuthProvider,
+  IAuthState,
+  IEventBus,
+  Transaction
+} from '../types';
 
 export class LedgerProvider implements IAuthProvider {
   private provider: HWProvider;
@@ -9,14 +16,24 @@ export class LedgerProvider implements IAuthProvider {
   private address: string | null;
   private signature: string | null;
   private addressIndex: number | null;
-  onChange: (() => void) | undefined;
+  private eventBus: IEventBus;
 
-  constructor(provider: HWProvider) {
+  constructor(provider: HWProvider, eventBus: IEventBus) {
     this.address = null;
     this.signature = null;
     this.addressIndex = null;
     this.provider = provider;
+    this.eventBus = eventBus;
   }
+
+  off(event: EventType, handler: EventHandler): void {
+    this.eventBus.unsubscribe(event, handler);
+  }
+
+  on(event: EventType, handler: EventHandler): void {
+    this.eventBus.subscribe(event, handler);
+  }
+
 
   getAddress(): string | null {
     return this.address;
@@ -59,9 +76,7 @@ export class LedgerProvider implements IAuthProvider {
     }
 
     this.authenticated = true;
-    if (this.onChange) {
-      this.onChange();
-    }
+    this.eventBus.emit("login", {});
 
     return this.address;
   }
@@ -72,9 +87,7 @@ export class LedgerProvider implements IAuthProvider {
       this.authenticated = false;
     }
 
-    if (this.onChange) {
-      this.onChange();
-    }
+    this.eventBus.emit("logout", {});
 
     return result;
   }

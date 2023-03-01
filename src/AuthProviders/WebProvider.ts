@@ -1,7 +1,14 @@
-import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider/out';
-import { ITransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/interface';
+import {WalletProvider} from '@multiversx/sdk-web-wallet-provider';
+import {ITransaction} from '@multiversx/sdk-web-wallet-provider/out/interface';
+import {
+  AuthProviderType, EventHandler, EventType,
+  IAuthProvider,
+  IAuthState,
+  IEventBus,
+  IWebConnectionOptions,
+  Transaction
+} from '../types';
 
-import { AuthProviderType, IAuthProvider, IAuthState, IWebConnectionOptions, Transaction } from '../types';
 
 export class WebProvider implements IAuthProvider {
   private provider: WalletProvider;
@@ -9,16 +16,30 @@ export class WebProvider implements IAuthProvider {
   private address: string | null;
   private authenticated: boolean;
   private signature: string | null;
-  onChange: (() => void) | undefined;
 
 
-  constructor(provider: WalletProvider, options: IWebConnectionOptions, address: string | null = null) {
+  constructor(
+      provider: WalletProvider,
+      options: IWebConnectionOptions,
+      eventBus: IEventBus,
+      address: string | null = null
+  ) {
     this.provider = provider;
     this.connectionOptions = options;
     this.address = address;
     this.authenticated = false;
     this.signature = null;
   }
+
+  off(event: EventType, handler: EventHandler): void {
+
+  }
+
+  on(event: EventType, handler: EventHandler): void {
+
+  }
+
+
 
   init(): Promise<boolean> {
     if (window !== undefined) {
