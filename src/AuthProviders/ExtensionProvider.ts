@@ -1,16 +1,34 @@
-import { ExtensionProvider as ErdExtensionProvider } from '@elrondnetwork/erdjs-extension-provider/out';
-import { ITransaction } from '@elrondnetwork/erdjs-extension-provider/out/interface';
+import {ExtensionProvider as MxExtensionProvider} from '@multiversx/sdk-extension-provider';
 
-import { AuthProviderType, IAuthProvider, IAuthState, Transaction } from '../types';
+import {
+  AuthProviderType, EventHandler,
+  EventType,
+  IAuthProvider,
+  IAuthState,
+  IEventBus,
+  Transaction
+} from '../types';
+import {ITransaction} from "@multiversx/sdk-extension-provider/out/interface";
 
 export class ExtensionProvider implements IAuthProvider {
-  private provider: ErdExtensionProvider;
+  private provider: MxExtensionProvider;
   private authenticated: boolean = false;
-  onChange: (() => void) | undefined;
+  private eventBus: IEventBus;
 
-  constructor(provider: ErdExtensionProvider) {
+
+  constructor(provider: MxExtensionProvider, eventBus: IEventBus) {
     this.provider = provider;
+    this.eventBus = eventBus;
   }
+
+  on(event: EventType, handler: EventHandler): void {
+    this.eventBus.subscribe(event, handler);
+  }
+
+  off(event: EventType, handler: EventHandler): void {
+    this.eventBus.unsubscribe(event, handler);
+  }
+
 
   getAddress(): string | null {
     return this.provider.account.address.length ? this.provider.account.address : null;
@@ -29,8 +47,7 @@ export class ExtensionProvider implements IAuthProvider {
     if (!result) {return "";}
 
     this.authenticated = true;
-
-    if (this.onChange) {this.onChange();}
+    this.eventBus.emit("login", {});
 
     return this.provider.account.address;
   }
@@ -39,9 +56,8 @@ export class ExtensionProvider implements IAuthProvider {
     const result = await this.provider.logout();
     if (result) {
       this.authenticated = false;
+      this.eventBus.emit("logout", {});
     }
-
-    if (this.onChange) {this.onChange();}
 
     return result;
   }
@@ -62,7 +78,7 @@ export class ExtensionProvider implements IAuthProvider {
     return AuthProviderType.EXTENSION;
   }
 
-  getBaseProvider(): ErdExtensionProvider {
+  getBaseProvider(): MxExtensionProvider {
     return this.provider;
   }
 

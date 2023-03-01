@@ -1,13 +1,12 @@
 export {
-    MaiarProviderFactory,
-    MaiarV2ProviderFactory,
+    WalletConnectProviderFactory,
     WebProviderFactory,
     ExtensionProviderFactory,
     LedgerProviderFactory
 } from "./Factories";
+
 export {
-    MaiarProvider,
-    MaiarV2Provider,
+    WalletConnectProvider,
     WebProvider,
     ExtensionProvider,
     LedgerProvider

@@ -1,22 +1,33 @@
 import {
-    AuthProviderType,
+    AuthProviderType, EventHandler, EventType,
     IAuthProvider,
-    IAuthState,
+    IAuthState, IEventBus,
     LoginOptions,
     LogoutOptions,
     Transaction
 } from "../types";
-import {WalletConnectProviderV2} from "maiar-v2/out";
-import {ITransaction} from "maiar-v2/out/interface";
+import {WalletConnectV2Provider} from "@multiversx/sdk-wallet-connect-provider";
+import {ITransaction} from "@multiversx/sdk-wallet-connect-provider/out/interface";
 
 
-export class MaiarV2Provider implements IAuthProvider {
-    private provider: WalletConnectProviderV2;
-    onChange: (() => void) | undefined;
+export class WalletConnectProvider implements IAuthProvider {
+    private provider: WalletConnectV2Provider;
+    private eventBus: IEventBus;
 
-    constructor(provider: WalletConnectProviderV2) {
+
+    constructor(provider: WalletConnectV2Provider, eventBus: IEventBus ) {
         this.provider = provider;
+        this.eventBus = eventBus;
     }
+
+    on(event: EventType, handler: EventHandler): void {
+        this.eventBus.subscribe(event, handler);
+    }
+
+    off(event: EventType, handler: EventHandler): void {
+        this.eventBus.unsubscribe(event, handler);
+    }
+
 
     async init(): Promise<boolean> {
         if (!this.provider.isInitialized()) {
@@ -34,9 +45,9 @@ export class MaiarV2Provider implements IAuthProvider {
         return uri || "";
     }
 
-    logout(options?: LogoutOptions): Promise<boolean> {
+    async logout(options?: LogoutOptions): Promise<boolean> {
         const topic = options?.pairingTopic;
-        return this.provider.logout({topic});
+        return await this.provider.logout({topic});
     }
 
     signTransaction(tx: Transaction): Promise<Transaction | null> {
@@ -44,7 +55,7 @@ export class MaiarV2Provider implements IAuthProvider {
     }
 
     getType(): AuthProviderType {
-        return AuthProviderType.MAIARV2;
+        return AuthProviderType.WALLET_CONNECT;
     }
 
     getAddress(): string | null {
@@ -55,7 +66,7 @@ export class MaiarV2Provider implements IAuthProvider {
         return this.provider.signature.length ? this.provider.signature : null;
     }
 
-    getBaseProvider(): WalletConnectProviderV2 {
+    getBaseProvider(): WalletConnectV2Provider {
         return this.provider;
     }
 
