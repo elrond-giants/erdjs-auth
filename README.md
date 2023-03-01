@@ -1,8 +1,8 @@
-# Elrond Auth Providers
+# MultiversX Auth Providers
 
 ### Overview
 
-This library aims to make it easy to authenticate and sign transactions on Elrond network. It offers a common interface
+This library aims to make it easy to authenticate and sign transactions on MultiversX network. It offers a common interface
 for all auth providers.
 
 ### Install
@@ -33,14 +33,20 @@ const address = provider.getAddress();
 const authSignature = provider.getSignature();
 ```
 
-An `onChange` callback can be set and it will be called when login/logout is done.
+Event listeners can be set for login/logout events.
 
 ```typescript
-const provider = new MaiarProviderFactory("devnet").createProvider();
-provider.onChange = () => {
-    const {address, authenticated} = provider.toJson();
-    console.log(address, authenticated);
-};
+import {WalletConnectProviderFactory} from "./WalletConnectProviderFactory";
+
+const provider = new WalletConnectProviderFactory("devnet").createProvider();
+
+provider.on(
+    "login",
+    () => {
+        const {address} = provider.toJson();
+        console.log(address);
+    }
+);
 const initialized = await provider.init();
 ```
 
