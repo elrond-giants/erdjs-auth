@@ -13,7 +13,7 @@ import WebviewTransport from "../WebviewTransport";
 import {Transaction as CoreTx} from "@multiversx/sdk-core"
 import {decodeAuthToken} from "../utils/webview";
 
-export default class WebviewProvider implements IAuthProvider {
+export class WebviewProvider implements IAuthProvider {
     private token: string | null = null;
     private webviewNetwork = new WebviewTransport();
     private address: string | null = null;
@@ -80,7 +80,6 @@ export default class WebviewProvider implements IAuthProvider {
     doLogin(accessToken: string): string {
         if (!accessToken) {return "";}
         this.token = accessToken;
-        // todo decode token and get address and signature
         const _token = decodeAuthToken(accessToken);
         if (!_token) {return "";}
         const {signature, address} = _token;

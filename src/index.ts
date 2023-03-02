@@ -1,13 +1,17 @@
+import {WebviewProvider} from "./AuthProviders";
+
 export {
     WalletConnectProviderFactory,
     WebProviderFactory,
     ExtensionProviderFactory,
-    LedgerProviderFactory
+    LedgerProviderFactory,
+    WebviewProviderFactory
 } from "./Factories";
 
 export {
     WalletConnectProvider,
     WebProvider,
     ExtensionProvider,
-    LedgerProvider
+    LedgerProvider,
+    WebviewProvider
 } from "./AuthProviders";
