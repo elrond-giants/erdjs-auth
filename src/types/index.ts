@@ -17,6 +17,7 @@ export enum AuthProviderType {
   EXTENSION = "extension",
   LEDGER = "ledger",
   PEM = "pem",
+  WEBVIEW = "webview",
   NONE = "none",
 }
 
@@ -96,3 +97,37 @@ export interface IEventBus {
   emit(key: EventType, payload: any): void;
 
 }
+
+export enum WebviewPlatforms {
+  ios = 'ios',
+  reactNative = 'reactNative',
+  web = 'web'
+}
+
+export enum WebViewProviderRequestEnums {
+  signTransactionsRequest = 'SIGN_TRANSACTIONS_REQUEST',
+  signMessageRequest = 'SIGN_MESSAGE_REQUEST',
+  loginRequest = 'LOGIN_REQUEST',
+  logoutRequest = 'LOGOUT_REQUEST',
+  reloginRequest = 'RELOGIN_REQUEST'
+}
+
+export enum WebViewProviderResponseEnums {
+  signTransactionsResponse = 'SIGN_TRANSACTIONS_RESPONSE',
+  signMessageResponse = 'SIGN_MESSAGE_RESPONSE',
+  loginResponse = 'LOGIN_RESPONSE',
+  reloginResponse = 'RELOGIN_RESPONSE'
+}
+
+export type DecodedLoginTokenType = {
+  blockHash: string;
+  extraInfo?: { timestamp?: number };
+  origin: string;
+  ttl: number;
+}
+
+export type AuthToken = {
+  address: string;
+  body: string;
+  signature: string;
+} & DecodedLoginTokenType;

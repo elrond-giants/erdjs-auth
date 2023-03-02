@@ -36,7 +36,7 @@ const authSignature = provider.getSignature();
 Event listeners can be set for login/logout events.
 
 ```typescript
-import {WalletConnectProviderFactory} from "./WalletConnectProviderFactory";
+import {WalletConnectProviderFactory} from "@elrond-giants/erdjs-auth";
 
 const provider = new WalletConnectProviderFactory("devnet").createProvider();
 
