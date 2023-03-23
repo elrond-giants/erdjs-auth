@@ -145,7 +145,7 @@ export class WebviewProvider implements IAuthProvider {
         try {
             this.webviewNetwork.post(
                 WebViewProviderRequestEnums.signTransactionsRequest,
-                transactions
+                transactions.map((tx) => (tx as CoreTx).toPlainObject())
             );
 
             return await signTxs();
