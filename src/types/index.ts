@@ -1,15 +1,9 @@
-import {
-  ITransaction as ExtensionTransaction
-} from '@multiversx/sdk-extension-provider/out/interface';
-import {ITransaction as LedgerTransaction} from '@multiversx/sdk-hw-provider/out/interface';
-import {
-  ITransaction as WalletConnectTransaction
-} from '@multiversx/sdk-wallet-connect-provider/out/interface';
-import {ISignable as PemWalletTransaction} from '@multiversx/sdk-wallet/out/interface';
-import {
-  ITransaction as WebWalletTransaction
-} from '@multiversx/sdk-web-wallet-provider/out/interface';
-
+import { ITransaction as ExtensionTransaction } from "@multiversx/sdk-extension-provider/out/interface";
+import { ITransaction as LedgerTransaction } from "@multiversx/sdk-hw-provider/out/interface";
+import { ITransaction as OperaTransaction } from "@multiversx/sdk-opera-provider/out/interface";
+import { ITransaction as WalletConnectTransaction } from "@multiversx/sdk-wallet-connect-provider/out/interface";
+import { ISignable as PemWalletTransaction } from "@multiversx/sdk-wallet/out/interface";
+import { ITransaction as WebWalletTransaction } from "@multiversx/sdk-web-wallet-provider/out/interface";
 
 export enum AuthProviderType {
   WALLET_CONNECT = "wallet_connect",
@@ -17,15 +11,17 @@ export enum AuthProviderType {
   EXTENSION = "extension",
   LEDGER = "ledger",
   PEM = "pem",
+  OPERA = "opera",
   NONE = "none",
 }
 
 export type Transaction =
-    | WebWalletTransaction
-    | WalletConnectTransaction
-    | ExtensionTransaction
-    | LedgerTransaction
-    | PemWalletTransaction;
+  | WebWalletTransaction
+  | WalletConnectTransaction
+  | ExtensionTransaction
+  | LedgerTransaction
+  | PemWalletTransaction
+  | OperaTransaction;
 
 export interface IAuthState {
   address: string | null;
@@ -39,11 +35,10 @@ export type LoginOptions = {
 
 export type LogoutOptions = {
   pairingTopic?: string;
-}
-export type EventHandler = (e: { name: EventType, data: any }) => void;
+};
+export type EventHandler = (e: { name: EventType; data: any }) => void;
 
 export interface IAuthProvider {
-
   on(event: EventType, handler: EventHandler): void;
 
   off(event: EventType, handler: EventHandler): void;
@@ -94,5 +89,4 @@ export interface IEventBus {
   unsubscribe(key: EventType, handler: EventHandler): void;
 
   emit(key: EventType, payload: any): void;
-
 }
