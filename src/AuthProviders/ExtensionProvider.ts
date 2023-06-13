@@ -1,5 +1,4 @@
 import {ExtensionProvider as MxExtensionProvider} from '@multiversx/sdk-extension-provider';
-
 import {
   AuthProviderType, EventHandler,
   EventType,
@@ -8,7 +7,7 @@ import {
   IEventBus,
   Transaction
 } from '../types';
-import {ITransaction} from "@multiversx/sdk-extension-provider/out/interface";
+import {Transaction as CoreTransaction} from '@multiversx/sdk-core/out';
 
 export class ExtensionProvider implements IAuthProvider {
   private provider: MxExtensionProvider;
@@ -62,8 +61,8 @@ export class ExtensionProvider implements IAuthProvider {
     return result;
   }
 
-  signTransaction(tx: Transaction): Promise<Transaction | null> {
-    return this.provider.signTransaction(tx as ITransaction);
+  signTransaction(tx: Transaction): Promise<CoreTransaction | null> {
+    return this.provider.signTransaction(tx as CoreTransaction);
   }
 
   getSignature() {

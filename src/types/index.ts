@@ -1,14 +1,9 @@
-import {
-  ITransaction as ExtensionTransaction
-} from '@multiversx/sdk-extension-provider/out/interface';
 import {ITransaction as LedgerTransaction} from '@multiversx/sdk-hw-provider/out/interface';
 import {
   ITransaction as WalletConnectTransaction
 } from '@multiversx/sdk-wallet-connect-provider/out/interface';
 import {ISignable as PemWalletTransaction} from '@multiversx/sdk-wallet/out/interface';
-import {
-  ITransaction as WebWalletTransaction
-} from '@multiversx/sdk-web-wallet-provider/out/interface';
+import {Transaction as CoreTransaction} from "@multiversx/sdk-core/out";
 
 
 export enum AuthProviderType {
@@ -22,9 +17,8 @@ export enum AuthProviderType {
 }
 
 export type Transaction =
-    | WebWalletTransaction
+    CoreTransaction
     | WalletConnectTransaction
-    | ExtensionTransaction
     | LedgerTransaction
     | PemWalletTransaction;
 

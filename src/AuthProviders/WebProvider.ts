@@ -1,5 +1,4 @@
 import {WalletProvider} from '@multiversx/sdk-web-wallet-provider';
-import {ITransaction} from '@multiversx/sdk-web-wallet-provider/out/interface';
 import {
   AuthProviderType, EventHandler, EventType,
   IAuthProvider,
@@ -8,6 +7,7 @@ import {
   IWebConnectionOptions,
   Transaction
 } from '../types';
+import {Transaction as CoreTransaction} from '@multiversx/sdk-core/out';
 
 
 export class WebProvider implements IAuthProvider {
@@ -70,7 +70,7 @@ export class WebProvider implements IAuthProvider {
   }
 
   async signTransaction(tx: Transaction): Promise<Transaction | null> {
-    await this.provider.signTransaction(tx as ITransaction, {
+    await this.provider.signTransaction(tx as CoreTransaction, {
       callbackUrl: this.connectionOptions.transactionRedirectUrl,
     });
 
