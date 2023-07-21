@@ -1,8 +1,3 @@
-import {ITransaction as LedgerTransaction} from '@multiversx/sdk-hw-provider/out/interface';
-import {
-  ITransaction as WalletConnectTransaction
-} from '@multiversx/sdk-wallet-connect-provider/out/interface';
-import {ISignable as PemWalletTransaction} from '@multiversx/sdk-wallet/out/interface';
 import {Transaction as CoreTransaction} from "@multiversx/sdk-core/out";
 
 
@@ -16,11 +11,7 @@ export enum AuthProviderType {
   NONE = "none",
 }
 
-export type Transaction =
-    CoreTransaction
-    | WalletConnectTransaction
-    | LedgerTransaction
-    | PemWalletTransaction;
+export type Transaction = CoreTransaction;
 
 export interface IAuthState {
   address: string | null;

@@ -7,7 +7,6 @@ import {
     Transaction
 } from "../types";
 import {WalletConnectV2Provider} from "@multiversx/sdk-wallet-connect-provider";
-import {ITransaction} from "@multiversx/sdk-wallet-connect-provider/out/interface";
 
 
 export class WalletConnectProvider implements IAuthProvider {
@@ -51,7 +50,7 @@ export class WalletConnectProvider implements IAuthProvider {
     }
 
     signTransaction(tx: Transaction): Promise<Transaction | null> {
-        return this.provider.signTransaction(tx as ITransaction);
+        return this.provider.signTransaction(tx as Transaction);
     }
 
     getType(): AuthProviderType {

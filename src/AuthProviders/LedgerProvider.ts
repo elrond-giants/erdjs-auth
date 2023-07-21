@@ -1,5 +1,4 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider';
-import { ITransaction as LedgerTransaction } from '@multiversx/sdk-hw-provider/out/interface';
 
 import {
   AuthProviderType, EventHandler,
@@ -60,7 +59,7 @@ export class LedgerProvider implements IAuthProvider {
 
   async login(_token?: string): Promise<string> {
     if (!this.addressIndex) {
-      throw new Error("Account is not selectd for Ledger Provider.");
+      throw new Error("Account is not selected for Ledger Provider.");
     }
 
     if (_token) {
@@ -93,7 +92,7 @@ export class LedgerProvider implements IAuthProvider {
   }
 
   signTransaction(tx: Transaction): Promise<Transaction | null> {
-    return this.provider.signTransaction(tx as LedgerTransaction);
+    return this.provider.signTransaction(tx);
   }
 
   getSignature() {

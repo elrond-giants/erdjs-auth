@@ -1,6 +1,6 @@
 {
   "name": "@elrond-giants/erdjs-auth",
-  "version": "0.7.0-alpha.0",
+  "version": "0.8.0",
   "description": "Easy to use MultiversX typescript Auth Providers, with a common interface.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -16,11 +16,11 @@
   "author": "ElrondGiants",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@multiversx/sdk-core": "^12.4.0",
-    "@multiversx/sdk-extension-provider": "^3.0.0-alpha.1",
+    "@multiversx/sdk-core": "^12.6.0",
+    "@multiversx/sdk-extension-provider": "^3.0.0",
     "@multiversx/sdk-hw-provider": "^3.0.3",
-    "@multiversx/sdk-wallet": "^3.0.0",
-    "@multiversx/sdk-wallet-connect-provider": "^3.2.1",
+    "@multiversx/sdk-wallet": "^4.2.0",
+    "@multiversx/sdk-wallet-connect-provider": "^4.0.2",
     "@multiversx/sdk-web-wallet-provider": "^3.0.0",
     "tslib": "^2.4.0"
   },

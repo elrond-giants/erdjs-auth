@@ -1,5 +1,4 @@
 import { UserSigner } from '@multiversx/sdk-wallet';
-import { ISignable as PemWalletTransaction } from '@multiversx/sdk-wallet/out/interface';
 
 import {
   AuthProviderType, EventHandler,
@@ -51,7 +50,9 @@ export class PemProvider implements IAuthProvider {
   }
 
   async signTransaction(tx: Transaction): Promise<Transaction | null> {
-    await this.userSigner.sign(tx as PemWalletTransaction);
+    const signature = await this.userSigner.sign(tx.serializeForSigning());
+    tx.applySignature(signature);
+
     return tx;
   }
 
