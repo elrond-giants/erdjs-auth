@@ -42,6 +42,9 @@ export interface IAuthProvider {
 
   signTransaction(tx: Transaction): Promise<Transaction | null>;
 
+  signTransactions(transactions: Transaction[]): Promise<Transaction[]>;
+
+
   getType(): AuthProviderType;
 
   toJson(): IAuthState;

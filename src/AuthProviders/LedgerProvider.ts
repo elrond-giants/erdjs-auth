@@ -95,6 +95,10 @@ export class LedgerProvider implements IAuthProvider {
     return this.provider.signTransaction(tx);
   }
 
+  signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+    return this.provider.signTransactions(transactions);
+  }
+
   getSignature() {
     return this.signature;
   }

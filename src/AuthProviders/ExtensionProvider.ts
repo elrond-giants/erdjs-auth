@@ -61,8 +61,12 @@ export class ExtensionProvider implements IAuthProvider {
     return result;
   }
 
-  signTransaction(tx: Transaction): Promise<CoreTransaction | null> {
+  signTransaction(tx: Transaction): Promise<Transaction | null> {
     return this.provider.signTransaction(tx as CoreTransaction);
+  }
+
+  signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+    return this.provider.signTransactions(transactions);
   }
 
   getSignature() {

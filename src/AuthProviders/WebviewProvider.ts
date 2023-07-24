@@ -164,4 +164,4 @@ export class WebviewProvider implements IAuthProvider {
         };
     }
 
-};
+}

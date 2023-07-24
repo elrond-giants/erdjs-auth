@@ -53,6 +53,10 @@ export class WalletConnectProvider implements IAuthProvider {
         return this.provider.signTransaction(tx as Transaction);
     }
 
+    signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+        return this.provider.signTransactions(transactions);
+    }
+
     getType(): AuthProviderType {
         return AuthProviderType.WALLET_CONNECT;
     }

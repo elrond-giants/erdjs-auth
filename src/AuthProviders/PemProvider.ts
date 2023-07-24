@@ -56,6 +56,17 @@ export class PemProvider implements IAuthProvider {
     return tx;
   }
 
+  async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+    const signedTransactions: Transaction[] = [];
+    for (const tx of transactions) {
+      const signedTx = await this.signTransaction(tx);
+      if (!signedTx) {throw new Error("Failed to sign transaction");}
+      signedTransactions.push(signedTx);
+    }
+
+    return signedTransactions;
+  }
+
   getSignature() {
     return null;
   }

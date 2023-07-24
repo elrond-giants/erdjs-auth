@@ -77,6 +77,14 @@ export class WebProvider implements IAuthProvider {
     return null;
   }
 
+  async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+    await this.provider.signTransactions(transactions as CoreTransaction[], {
+      callbackUrl: this.connectionOptions.transactionRedirectUrl,
+    });
+
+    return [];
+  }
+
   getAddress(): string | null {
     return this.address;
   }
