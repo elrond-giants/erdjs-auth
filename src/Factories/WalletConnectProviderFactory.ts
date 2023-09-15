@@ -1,20 +1,26 @@
 import {WalletConnectV2Provider} from "@multiversx/sdk-wallet-connect-provider";
 import {WalletConnectProvider} from '../AuthProviders';
-import {IAuthProvider, IAuthProviderFactory, INetworkConfig, NetworkEnv} from '../types';
-import {network} from "../network";
+import {
+    IAuthProvider,
+    IAuthProviderFactory,
+    WalletConnectProviderOptions
+} from '../types';
 import EventsBus from "../EventBus";
+import {getNetworkOptions} from "../utils/network";
+
 
 export class WalletConnectProviderFactory implements IAuthProviderFactory {
-    private networkOptions: INetworkConfig;
-    private readonly projectId: string;
+    protected options: Required<WalletConnectProviderOptions>;
 
-    constructor(env: NetworkEnv, projectId: string) {
-        this.networkOptions = network[env];
-        this.projectId = projectId;
+    constructor({chainId, projectId, relayAddress}: WalletConnectProviderOptions) {
+        if (!relayAddress) {
+            const networkOptions = getNetworkOptions(chainId);
+            relayAddress = networkOptions.relayAddress
+        }
+        this.options = {chainId, projectId, relayAddress};
     }
 
     createProvider(): IAuthProvider {
-        let walletConnectProvider: WalletConnectProvider;
         const eventBus = new EventsBus();
 
         const provider = new WalletConnectV2Provider(
@@ -24,14 +30,12 @@ export class WalletConnectProviderFactory implements IAuthProviderFactory {
                 onClientEvent: (event) => eventBus.emit(event.name, event.data),
             },
 
-            this.networkOptions.chainId,
-            this.networkOptions.relayAddress,
-            this.projectId
+            this.options.chainId,
+            this.options.relayAddress,
+            this.options.projectId
         );
 
+        return new WalletConnectProvider(provider, eventBus);
 
-        walletConnectProvider = new WalletConnectProvider(provider, eventBus);
-
-        return walletConnectProvider;
     }
 }

@@ -1,5 +1,4 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider';
-
 import {
   AuthProviderType, EventHandler,
   EventType,
@@ -69,7 +68,7 @@ export class LedgerProvider implements IAuthProvider {
         token,
       });
       this.address = address;
-      this.signature = signature.hex();
+      this.signature = signature.toString("hex");
     } else {
       this.address = await this.provider.login({ addressIndex: this.addressIndex });
     }

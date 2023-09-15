@@ -38,7 +38,10 @@ Event listeners can be set for login/logout events.
 ```typescript
 import {WalletConnectProviderFactory} from "@elrond-giants/erdjs-auth";
 
-const provider = new WalletConnectProviderFactory("devnet").createProvider();
+const provider = new WalletConnectProviderFactory({
+    chainId: "D",
+    projectId: "yourProjectId"
+}).createProvider();
 
 provider.on(
     "login",

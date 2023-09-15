@@ -1,23 +1,25 @@
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider/out';
 import { WebProvider } from '../AuthProviders';
-import {IAuthProvider, IAuthProviderFactory, IWebConnectionOptions, NetworkEnv} from '../types';
-import {network} from "../network";
+import {
+    IAuthProvider,
+    IAuthProviderFactory,
+    WebProviderOptions
+} from '../types';
 import EventsBus from "../EventBus";
+import {getNetworkOptions} from "../utils/network";
+
+
 
 export class WebProviderFactory implements IAuthProviderFactory {
-    private readonly networkAddress: string;
-    private connectionOptions: IWebConnectionOptions = {};
     private address: string | null = null;
+    protected options: Required<WebProviderOptions>;
 
-    constructor(env: NetworkEnv) {
-        const networkOptions = network[env];
-        this.networkAddress = networkOptions.walletAddress;
-    }
-
-    setConnectionOptions(value: IWebConnectionOptions) {
-        this.connectionOptions = value;
-
-        return this;
+    constructor({chainId, walletAddress, networkOptions}: WebProviderOptions) {
+        if (!walletAddress) {
+            const options = getNetworkOptions(chainId);
+            walletAddress = options.walletAddress;
+        }
+        this.options = {chainId, walletAddress, networkOptions: networkOptions ?? {}};
     }
 
     setAddress(value: string | null) {
@@ -27,8 +29,13 @@ export class WebProviderFactory implements IAuthProviderFactory {
     }
 
     createProvider(): IAuthProvider {
-        const provider = new WalletProvider(this.networkAddress);
+        const provider = new WalletProvider(this.options.walletAddress);
 
-        return new WebProvider(provider, this.connectionOptions, new EventsBus(), this.address);
+        return new WebProvider(
+            provider,
+            this.options.networkOptions || {},
+            new EventsBus(),
+            this.address
+        );
     }
 }

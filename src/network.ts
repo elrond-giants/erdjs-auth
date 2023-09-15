@@ -13,7 +13,7 @@ export const network: {
     },
     "devnet": {
         bridgeAddress: "https://bridge.walletconnect.org",
-        walletAddress: "https://devnet-wallet.multiversx.com/dapp/init",
+        walletAddress: "https://devnet2-wallet.multiversx.com/dapp/init",
         chainId: "D",
         relayAddress: "wss://relay.walletconnect.com"
     },

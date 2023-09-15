@@ -119,3 +119,23 @@ export type AuthToken = {
   body: string;
   signature: string;
 } & DecodedLoginTokenType;
+
+export type NetworkOptions = {
+  chainId: string;
+  walletAddress?: string;
+  bridgeAddress?: string;
+  relayAddress?: string;
+  webConnectionOptions?: IWebConnectionOptions;
+};
+
+export type WebProviderOptions = {
+  chainId: string;
+  walletAddress?: string,
+  networkOptions?: IWebConnectionOptions
+};
+
+export type WalletConnectProviderOptions = {
+  chainId: string;
+  projectId: string;
+  relayAddress?: string;
+}
