@@ -1,5 +1,5 @@
-import { ITransaction } from "@multiversx/sdk-extension-provider/out/interface";
 import { OperaProvider as MxOperaProvider } from "@multiversx/sdk-opera-provider";
+import { ITransaction } from "@multiversx/sdk-opera-provider/out/interface";
 
 import { AuthProviderType, EventHandler, EventType, IAuthProvider, IAuthState, IEventBus, Transaction } from "../types";
 
