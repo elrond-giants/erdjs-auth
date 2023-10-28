@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
-    "prepare": "npm run build"
+    "build": "rimraf dist && tsc"
   },
   "keywords": [
     "erdjs",

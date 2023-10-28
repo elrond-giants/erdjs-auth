@@ -1,3 +1,4 @@
+export { XAliasProviderFactory } from "./XAliasProviderFactory";
 export { WalletConnectProviderFactory } from "./WalletConnectProviderFactory";
 export { WebProviderFactory } from "./WebProviderFactory";
 export { LedgerProviderFactory } from "./LedgerProviderFactory";

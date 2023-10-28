@@ -1,9 +1,9 @@
-import {Transaction as CoreTransaction} from "@multiversx/sdk-core/out";
-
+import { Transaction as CoreTransaction } from "@multiversx/sdk-core/out";
 
 export enum AuthProviderType {
   WALLET_CONNECT = "wallet_connect",
   WEBWALLET = "webwallet",
+  XALIAS = "xalias",
   EXTENSION = "extension",
   LEDGER = "ledger",
   PEM = "pem",
@@ -25,11 +25,10 @@ export type LoginOptions = {
 
 export type LogoutOptions = {
   pairingTopic?: string;
-}
-export type EventHandler = (e: { name: EventType, data: any }) => void;
+};
+export type EventHandler = (e: { name: EventType; data: any }) => void;
 
 export interface IAuthProvider {
-
   on(event: EventType, handler: EventHandler): void;
 
   off(event: EventType, handler: EventHandler): void;
@@ -43,7 +42,6 @@ export interface IAuthProvider {
   signTransaction(tx: Transaction): Promise<Transaction | null>;
 
   signTransactions(transactions: Transaction[]): Promise<Transaction[]>;
-
 
   getType(): AuthProviderType;
 
@@ -71,6 +69,7 @@ export interface INetworkConfig {
   bridgeAddress: string;
   chainId: string;
   relayAddress: string;
+  xAliasAddress: string;
 }
 
 export type NetworkEnv = "testnet" | "devnet" | "mainnet";
@@ -83,28 +82,27 @@ export interface IEventBus {
   unsubscribe(key: EventType, handler: EventHandler): void;
 
   emit(key: EventType, payload: any): void;
-
 }
 
 export enum WebviewPlatforms {
-  ios = 'ios',
-  reactNative = 'reactNative',
-  web = 'web'
+  ios = "ios",
+  reactNative = "reactNative",
+  web = "web",
 }
 
 export enum WebViewProviderRequestEnums {
-  signTransactionsRequest = 'SIGN_TRANSACTIONS_REQUEST',
-  signMessageRequest = 'SIGN_MESSAGE_REQUEST',
-  loginRequest = 'LOGIN_REQUEST',
-  logoutRequest = 'LOGOUT_REQUEST',
-  reloginRequest = 'RELOGIN_REQUEST'
+  signTransactionsRequest = "SIGN_TRANSACTIONS_REQUEST",
+  signMessageRequest = "SIGN_MESSAGE_REQUEST",
+  loginRequest = "LOGIN_REQUEST",
+  logoutRequest = "LOGOUT_REQUEST",
+  reloginRequest = "RELOGIN_REQUEST",
 }
 
 export enum WebViewProviderResponseEnums {
-  signTransactionsResponse = 'SIGN_TRANSACTIONS_RESPONSE',
-  signMessageResponse = 'SIGN_MESSAGE_RESPONSE',
-  loginResponse = 'LOGIN_RESPONSE',
-  reloginResponse = 'RELOGIN_RESPONSE'
+  signTransactionsResponse = "SIGN_TRANSACTIONS_RESPONSE",
+  signMessageResponse = "SIGN_MESSAGE_RESPONSE",
+  loginResponse = "LOGIN_RESPONSE",
+  reloginResponse = "RELOGIN_RESPONSE",
 }
 
 export type DecodedLoginTokenType = {
@@ -112,7 +110,7 @@ export type DecodedLoginTokenType = {
   extraInfo?: { timestamp?: number };
   origin: string;
   ttl: number;
-}
+};
 
 export type AuthToken = {
   address: string;
@@ -130,12 +128,12 @@ export type NetworkOptions = {
 
 export type WebProviderOptions = {
   chainId: string;
-  walletAddress?: string,
-  networkOptions?: IWebConnectionOptions
+  walletAddress?: string;
+  networkOptions?: IWebConnectionOptions;
 };
 
 export type WalletConnectProviderOptions = {
   chainId: string;
   projectId: string;
   relayAddress?: string;
-}
+};
