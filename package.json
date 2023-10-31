@@ -1,6 +1,6 @@
 {
   "name": "@elrond-giants/erdjs-auth",
-  "version": "0.10.1-beta.0",
+  "version": "0.10.1-beta.1",
   "description": "Easy to use MultiversX typescript Auth Providers, with a common interface.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",

@@ -116,7 +116,7 @@ export class WebProvider implements IAuthProvider {
   toJson(): IAuthState {
     return {
       address: this.address,
-      authProviderType: AuthProviderType.WEBWALLET,
+      authProviderType: this.getType(),
       authenticated: this.authenticated
     };
   }
