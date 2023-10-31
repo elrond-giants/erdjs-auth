@@ -4,3 +4,4 @@ export { LedgerProviderFactory } from "./LedgerProviderFactory";
 export { ExtensionProviderFactory } from "./ExtensionProviderFactory";
 export { WebviewProviderFactory } from "./WebviewProviderFactory";
 // export { PemProviderFactory } from "./PemProviderFactory";
+export { XAliasProviderFactory } from "./XAliasProviderFactory";

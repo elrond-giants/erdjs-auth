@@ -11,11 +11,11 @@ import {Transaction as CoreTransaction} from '@multiversx/sdk-core/out';
 
 
 export class WebProvider implements IAuthProvider {
-  private provider: WalletProvider;
-  private connectionOptions: IWebConnectionOptions;
-  private address: string | null;
-  private authenticated: boolean;
-  private signature: string | null;
+  protected provider: WalletProvider;
+  protected connectionOptions: IWebConnectionOptions;
+  protected address: string | null;
+  protected authenticated: boolean;
+  protected signature: string | null;
 
 
   constructor(

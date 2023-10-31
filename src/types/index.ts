@@ -8,6 +8,7 @@ export enum AuthProviderType {
   LEDGER = "ledger",
   PEM = "pem",
   WEBVIEW = "webview",
+  XALIAS = "xalias",
   NONE = "none",
 }
 
@@ -71,6 +72,7 @@ export interface INetworkConfig {
   bridgeAddress: string;
   chainId: string;
   relayAddress: string;
+  xaliasAddress: string;
 }
 
 export type NetworkEnv = "testnet" | "devnet" | "mainnet";
@@ -139,3 +141,5 @@ export type WalletConnectProviderOptions = {
   projectId: string;
   relayAddress?: string;
 }
+
+export type XAliasProviderOptions = WebProviderOptions;

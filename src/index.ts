@@ -5,7 +5,8 @@ export {
     WebProviderFactory,
     ExtensionProviderFactory,
     LedgerProviderFactory,
-    WebviewProviderFactory
+    WebviewProviderFactory,
+    XAliasProviderFactory
 } from "./Factories";
 
 export {
@@ -13,5 +14,6 @@ export {
     WebProvider,
     ExtensionProvider,
     LedgerProvider,
-    WebviewProvider
+    WebviewProvider,
+    XAliasProvider
 } from "./AuthProviders";
