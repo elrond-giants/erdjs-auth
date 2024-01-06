@@ -38,7 +38,7 @@ export class WalletConnectProvider implements IAuthProvider {
 
     async login(token?: string, options?: LoginOptions): Promise<string> {
         const topic = options?.pairingTopic;
-        const {uri, approval} = await this.provider.connect({topic});
+        const {uri, approval} = await this.provider.connect({topic, methods: ["mvx_signNativeAuthToken", "mvx_cancelAction"]});
         this.provider.login({token, approval});
 
         return uri || "";
