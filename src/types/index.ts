@@ -22,6 +22,7 @@ export interface IAuthState {
 
 export type LoginOptions = {
   pairingTopic?: string;
+  methods?: string[];
 };
 
 export type LogoutOptions = {
